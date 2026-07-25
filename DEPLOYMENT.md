@@ -1,6 +1,8 @@
 # Deployment Guide — Page Pulse
 
-This guide walks you through deploying Page Pulse to **Render** (backend) and **Vercel** (frontend) on their free tiers. This combination is reliable, requires no credit card, and keeps the frontend and backend cleanly decoupled.
+This guide walks you through deploying Page Pulse to **Render** (backend) and **Vercel** (frontend) on their free tiers. This combination is reliable and requires no credit card.
+
+> **Important:** The repo has a `backend/` directory for the Python service and a `frontend/` directory for the Next.js app. The deployment configs are set up so each platform only builds the part it needs.
 
 ---
 
@@ -36,12 +38,16 @@ Go to [https://render.com](https://render.com) and sign up with your GitHub acco
 ### Step 2: Create a new Web Service
 1. From the Render dashboard, click **New +** → **Web Service**.
 2. Select the `anshika368/Page_Pulse` repository.
-3. Configure the service:
+
+> **Using the Blueprint (recommended):** If Render asks whether to use `render.yaml`, click **Use Blueprint**. The `rootDir: backend` setting in that file tells Render to run all commands from the `backend/` folder.
+
+3. If you are creating the service manually, configure it as follows:
 
 | Setting | Value |
 |---------|-------|
 | Name | `page-pulse-api` |
 | Runtime | `Python` |
+| Root Directory | `backend` |
 | Build Command | `pip install -r requirements.txt` |
 | Start Command | `uvicorn main:app --host 0.0.0.0 --port $PORT` |
 | Region | `Oregon (US West)` (or closest to you) |
@@ -55,6 +61,10 @@ Go to [https://render.com](https://render.com) and sign up with your GitHub acco
 | `CORS_ALLOWED_ORIGINS` | `*` (for now; we will restrict this after Vercel deployment) |
 
 5. Click **Create Web Service**.
+
+If you see an error saying `requirements.txt` cannot be found, it means Render is running commands from the repo root instead of `backend/`. Fix it by either:
+- Using the `render.yaml` Blueprint (recommended), or
+- Setting the **Root Directory** field to `backend` in the service settings.
 
 Render will build and deploy the backend. Once finished, it gives you a public URL like:
 

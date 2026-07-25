@@ -241,6 +241,10 @@ Create `frontend/.env.local` if your backend is not on the default origin:
 NEXT_PUBLIC_API_URL=http://127.0.0.1:8000
 ```
 
+## Deployment
+
+See [`DEPLOYMENT.md`](DEPLOYMENT.md) for a complete step-by-step guide to deploying the backend on **Render** and the frontend on **Vercel** using their free tiers.
+
 ---
 
 ## AI Collaboration Note

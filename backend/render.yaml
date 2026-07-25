@@ -1,0 +1,19 @@
+# Render.com infrastructure-as-code for Page Pulse backend.
+# See DEPLOYMENT.md for the full step-by-step guide.
+
+services:
+  - type: web
+    name: page-pulse-api
+    runtime: python
+    plan: free
+    region: oregon
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.0"
+      - key: CORS_ALLOWED_ORIGINS
+        value: "*"
+        # Replace "*" with your Vercel frontend URL after deployment, e.g.:
+        # value: "https://page-pulse.vercel.app"
+    healthCheckPath: /health
